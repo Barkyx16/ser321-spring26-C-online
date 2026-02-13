@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <link rel="shortcut icon" href="data:image/x-icon;," type="image/x-icon">
+    <title>FunWebServer</title>
+  </head>
+
+  <body>
+    <h3>You can make the following GET requests</h3>
+
+    <ul>
+      <li><b>/</b> — shows this page (root.html)</li>
+      <li><b>/random</b> — returns index.html</li>
+      <li><b>/json</b> — returns JSON for the /random request</li>
+      <li><b>/file/sample.html</b> — returns the content of the file (simplified in this server)</li>
+
+      <li><b>/multiply?num1=3&num2=4</b> — multiplies two integers</li>
+      <li><b>/github?query=users/amehlhase316/repos</b> — shows repo <code>full_name</code>, <code>id</code>, and <code>owner.login</code></li>
+
+      <li><b>/password?length=16&symbols=true</b> — generates a random password (length 8–64, symbols true/false)</li>
+      <li><b>/convert?value=72&from=F&to=C</b> — converts temperature between C, F, and K</li>
+    </ul>
+
+    <h3>File Structure in www (you can use /file/www/FILENAME):</h3>
+    ${links}
+  </body>
+</html>
+
