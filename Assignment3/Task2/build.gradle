@@ -1,0 +1,38 @@
+apply plugin: 'java'
+
+description = "Hangman Game - Reference Implementation"
+
+repositories {
+  mavenCentral()
+}
+
+dependencies{
+  implementation "junit:junit:4.12"
+  implementation 'org.json:json:20171018'
+}
+
+// Server and Client tasks with configurable host and port
+// Usage:
+//   gradle Server -Pport=9000
+//   gradle Client -Phost=example.com -Pport=9000
+tasks.register('Server', JavaExec) {
+  group 'Hangman Game'
+  description 'Start Hangman server - use -Pport=<port> to override default port'
+
+  classpath = sourceSets.main.runtimeClasspath
+
+  mainClass.set('HangmanServer')
+  args project.hasProperty('port') ? project.getProperty('port') : '8888'
+}
+
+tasks.register('Client', JavaExec) {
+  group 'Hangman Game'
+  description 'Start Hangman client - use -Phost=<host> -Pport=<port> to override defaults'
+
+  standardInput = System.in
+  classpath = sourceSets.main.runtimeClasspath
+
+  mainClass.set('HangmanClient')
+  args project.hasProperty('host') ? project.getProperty('host') : 'localhost'
+  args project.hasProperty('port') ? project.getProperty('port') : '8888'
+}
