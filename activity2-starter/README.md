@@ -1,5 +1,6 @@
 Activity 2: Auction Game Server (Protocol Buffers + Threading)
 Overview
+Video Link and Demo: https://youtu.be/9Nit1KZpnIE
 
 In this activity, I updated the auction server so it can handle multiple players connecting at the same time instead of only working with one client. I also switched the communication format from JSON to Protocol Buffers and followed the structure shown in PROTO_PROTOCOL.md.
 
