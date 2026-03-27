@@ -1,0 +1,80 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.google.protobuf' version '0.9.2'
+}
+
+group = 'auction'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'com.google.protobuf:protobuf-java:3.24.0'
+
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.3'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+sourceCompatibility = '17'
+targetCompatibility = '17'
+
+protobuf {
+    protoc {
+        artifact = 'com.google.protobuf:protoc:3.24.0'
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs 'build/generated/source/proto/main/java'
+        }
+    }
+}
+
+tasks.register('runServer', JavaExec) {
+    group = 'application'
+    description = 'Run the Auction Server'
+    mainClass = 'auction.AuctionServer'
+    classpath = sourceSets.main.runtimeClasspath
+    standardInput = System.in
+
+    if (project.hasProperty('args')) {
+        args project.property('args').split()
+    }
+}
+
+tasks.register('runServerGrading', JavaExec) {
+    group = 'application'
+    description = 'Run the Auction Server in grading mode'
+    mainClass = 'auction.AuctionServer'
+    classpath = sourceSets.main.runtimeClasspath
+    standardInput = System.in
+    args '--grading'
+}
+
+tasks.register('runClient', JavaExec) {
+    group = 'application'
+    description = 'Run the Auction Client'
+    mainClass = 'auction.AuctionClient'
+    classpath = sourceSets.main.runtimeClasspath
+    standardInput = System.in
+
+    if (project.hasProperty('host')) {
+        args project.property('host')
+        if (project.hasProperty('port')) {
+            args project.property('port')
+        }
+    }
+}
+
+application {
+    mainClass = 'auction.AuctionServer'
+}
+
+test {
+    useJUnitPlatform()
+}

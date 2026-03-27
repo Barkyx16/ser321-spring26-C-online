@@ -1,0 +1,97 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "buffers";
+option java_outer_classname = "AuctionProtos";
+
+// Request from client to server
+message Request {
+    enum RequestType {
+        REGISTER = 0;
+        JOIN = 1;
+        BID = 2;
+        LEADERBOARD = 3;
+        QUIT = 4;
+    }
+
+    RequestType type = 1;
+    string name = 2;         // Used for REGISTER request
+    int32 item_id = 3;       // Used for BID request
+    int32 bid_amount = 4;    // Used for BID request
+}
+
+// Response from server to client
+message Response {
+    enum ResponseType {
+        WELCOME = 0;
+        GAME_JOINED = 1;
+        BID_RESULT = 2;
+        GAME_OVER = 3;
+        LEADERBOARD_RESPONSE = 4;
+        ERROR = 5;
+        FAREWELL = 6;
+    }
+
+    ResponseType type = 1;
+    bool ok = 2;
+    string message = 3;
+    AuctionItem next_item = 4;      // Next item to bid on (GAME_JOINED: first item, BID_RESULT: next item if more remain)
+    AuctionResult result = 5;       // Used for BID_RESULT
+    GameResult game_result = 6;     // Used for GAME_OVER
+    Leaderboard leaderboard = 7;    // Used for LEADERBOARD_RESPONSE
+    PlayerStatus player_status = 8; // Current player gold (GAME_JOINED, BID_RESULT)
+}
+
+// Item up for auction
+message AuctionItem {
+    int32 id = 1;
+    string name = 2;
+    string category = 3;
+    int32 min_value = 4;
+    int32 max_value = 5;
+    int32 reserve_price = 6;
+}
+
+// Result of a completed auction
+message AuctionResult {
+    AuctionItem item = 1;
+    int32 actual_value = 2;
+    string winner_name = 3;
+    int32 winning_bid = 4;
+    repeated PlayerBid all_bids = 5;
+}
+
+// A single player's bid
+message PlayerBid {
+    string player_name = 1;
+    int32 bid_amount = 2;
+}
+
+// Final game results
+message GameResult {
+    repeated PlayerStatus player_scores = 1;
+    string winner_name = 2;
+    int32 leaderboard_position = 3;
+}
+
+// A player's current score
+message PlayerStatus {
+    string player_name = 1;
+    int32 gold_remaining = 2;
+    int32 items_value = 3;
+    int32 total_score = 4;
+    repeated string items_won = 5;
+}
+
+// Leaderboard with top scores
+message Leaderboard {
+    repeated LeaderboardEntry entries = 1;
+}
+
+// A single leaderboard entry
+message LeaderboardEntry {
+    int32 rank = 1;
+    string player_name = 2;
+    int32 score = 3;
+    string timestamp = 4;
+}

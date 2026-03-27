@@ -1,0 +1,105 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "taskone.proto";
+
+/*
+ This file defines how the client and server communicate using protobuf
+ instead of JSON. Each request tells the server what action the user
+ wants to perform, and each response sends back the result.
+
+ The supported actions are:
+ add a task
+ list tasks
+ finish a task
+ quit the program
+*/
+
+
+// ---------- REQUEST MESSAGE ----------
+
+/*
+ A request is sent from the client to the server.
+ The request type decides which action should happen.
+ Some fields are only used depending on the request.
+*/
+
+message Request {
+
+  enum RequestType {
+    UNKNOWN = 0;
+    ADD = 1;
+    LIST = 2;
+    FINISH = 3;
+    QUIT = 4;
+  }
+
+  RequestType type = 1;
+
+  // used when creating a task
+  string title = 2;
+  string description = 3;
+  string category = 4;
+
+  // used when listing tasks with a filter
+  string filter = 5;
+
+  // used when marking a task as finished
+  int32 id = 6;
+}
+
+
+// ---------- RESPONSE MESSAGE ----------
+
+/*
+ A response is sent back after the server handles a request.
+ It lets the client know whether the action worked and can
+ also include task data if needed.
+*/
+
+message Response {
+
+  enum ResponseType {
+    UNKNOWN = 0;
+    SUCCESS = 1;
+    ERROR = 2;
+  }
+
+  ResponseType type = 1;
+
+  // short message describing the result
+  string message = 2;
+
+  // returned when multiple tasks need to be shown
+  TaskList taskList = 3;
+
+  // returned when a single task is involved
+  TaskProto task = 4;
+}
+
+
+// ---------- TASK STRUCTURE ----------
+
+/*
+ This represents one task stored on the server.
+*/
+
+message TaskProto {
+
+  int32 id = 1;
+  string title = 2;
+  string description = 3;
+  string category = 4;
+  bool finished = 5;
+}
+
+
+/*
+ Used when sending several tasks at once.
+*/
+
+message TaskList {
+
+  repeated TaskProto tasks = 1;
+  int32 count = 2;
+}

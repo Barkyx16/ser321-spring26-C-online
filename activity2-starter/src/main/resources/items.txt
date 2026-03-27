@@ -1,0 +1,36 @@
+# Auction Items
+# Format: name,category,minValue,maxValue
+# Actual value will be randomly assigned within range (or fixed for grading mode)
+
+# Weapons (high value)
+Dragon Slayer Sword,Weapon,40,60
+Enchanted Bow,Weapon,35,55
+Battle Axe of Power,Weapon,30,50
+
+# Armor (medium-high value)
+Plate Armor of Defense,Armor,35,50
+Mithril Chainmail,Armor,30,45
+Shield of Valor,Armor,25,40
+
+# Magic Items (varied value)
+Spell Book of Fire,Magic,25,40
+Wand of Lightning,Magic,20,35
+Amulet of Protection,Magic,15,30
+Crystal Ball,Magic,20,30
+
+# Consumables (low-medium value)
+Health Potion (Large),Consumable,10,20
+Mana Potion (Large),Consumable,8,18
+Elixir of Strength,Consumable,12,22
+Antidote Potion,Consumable,5,15
+
+# Jewelry (medium value)
+Golden Crown,Jewelry,30,45
+Ruby Necklace,Jewelry,25,35
+Diamond Ring,Jewelry,20,30
+Silver Bracelet,Jewelry,10,20
+
+# Quest Items (high value, rare)
+Ancient Artifact,Quest,45,65
+Map to Treasure,Quest,35,50
+Key to Dragon's Lair,Quest,25,40
