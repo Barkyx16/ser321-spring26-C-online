@@ -1,0 +1,41 @@
+plugins {
+    id 'java'
+    id 'application'
+}
+
+group = 'edu.assignment5'
+version = '1.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+application {
+    mainClass = 'Leader'
+}
+
+tasks.register('runLeader', JavaExec) {
+    group = 'application'
+    description = 'Starts the Leader program.'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'Leader'
+    standardInput = System.in
+}
+
+tasks.register('runWorker', JavaExec) {
+    group = 'application'
+    description = 'Starts the Worker program.'
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = 'Worker'
+    standardInput = System.in
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
