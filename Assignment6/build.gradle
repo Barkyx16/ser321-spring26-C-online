@@ -1,0 +1,49 @@
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.google.protobuf' version '0.9.4'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'io.grpc:grpc-netty-shaded:1.62.2'
+    implementation 'io.grpc:grpc-protobuf:1.62.2'
+    implementation 'io.grpc:grpc-stub:1.62.2'
+    compileOnly 'org.apache.tomcat:annotations-api:6.0.53'
+    testImplementation 'junit:junit:4.13.2'
+}
+
+application {
+    mainClass = 'example.grpcclient.Node'
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.25.3"
+    }
+    plugins {
+        grpc {
+            artifact = 'io.grpc:protoc-gen-grpc-java:1.62.2'
+        }
+    }
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {}
+        }
+    }
+}
+
+tasks.register("runNode", JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = "example.grpcclient.Node"
+    standardInput = System.in
+}
+
+tasks.register("runClient", JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+    mainClass = "example.grpcclient.Client"
+    standardInput = System.in
+}

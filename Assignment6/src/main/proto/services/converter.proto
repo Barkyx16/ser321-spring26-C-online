@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package services;
+
+service Converter {
+  rpc celsiusToFahrenheit (TempRequest) returns (TempReply);
+  rpc fahrenheitToCelsius (TempRequest) returns (TempReply);
+}
+
+message TempRequest {
+  double value = 1;
+}
+
+message TempReply {
+  double value = 1;
+}

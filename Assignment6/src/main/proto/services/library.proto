@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package services;
+
+service Library {
+  rpc addBook (BookRequest) returns (BookReply);
+  rpc listBooks (Empty) returns (BookList);
+}
+
+message BookRequest {
+  string title = 1;
+}
+
+message BookReply {
+  string message = 1;
+}
+
+message BookList {
+  repeated string books = 1;
+}
+
+message Empty {}

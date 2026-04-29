@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package services;
+
+service StudyBuddy {
+  rpc addTask (TaskRequest) returns (TaskReply);
+  rpc listTasks (StudyEmpty) returns (TaskList);
+}
+
+message TaskRequest {
+  string task = 1;
+}
+
+message TaskReply {
+  string message = 1;
+}
+
+message TaskList {
+  repeated string tasks = 1;
+}
+
+message StudyEmpty {}
